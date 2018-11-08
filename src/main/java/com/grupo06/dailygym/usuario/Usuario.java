@@ -7,14 +7,27 @@ import com.grupo06.dailygym.esteira.Exercicio;
 
 public class Usuario implements IUsuario {
 
+	private static Usuario instance = null;
+	
 	private String nome;
 	private float altura;
 	
 	private ArrayList<Exercicio> exercicios;
 	private ArrayList<Medida> medidas;
 	
-	public Usuario() {
-		
+	private Usuario() {
+		//TODO: le banco de dados
+	}
+	
+	public static Usuario getInstance(){
+		if(instance == null){
+			synchronized(Usuario.class){
+				if(instance == null){
+					instance = new Usuario();
+				}
+			}
+		}
+		return instance;
 	}
 	
 	public float getPesoAtual() {

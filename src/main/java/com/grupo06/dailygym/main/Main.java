@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.smartwatch.gui;
+package com.grupo06.dailygym.main;
 	
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +13,18 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
 	        Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
 	        Scene scene = new Scene(root);
 			
 			primaryStage.setTitle("Daily Gym");
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			Parent rootBalanca = FXMLLoader.load(getClass().getResource("Balanca.fxml"));
+			Stage balancaStage = new Stage();
+			balancaStage.setScene(new Scene(rootBalanca));
+			balancaStage.setTitle("Balança");
+			balancaStage.show();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

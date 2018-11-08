@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.smartwatch.controle;
+package com.grupo06.dailygym.smartwatch;
 
 import java.time.DayOfWeek;
 import java.util.Set;

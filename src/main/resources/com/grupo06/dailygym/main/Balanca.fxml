@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="182.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.balanca.gui.BalancaViewController">
+   <children>
+      <Button onMouseClicked="#onPesarClick" id="pesarBt" layoutX="73.0" layoutY="125.0" mnemonicParsing="false" text="Pesar" />
+      <Label layoutX="31.0" layoutY="26.0" text="Peso (Kg)" />
+      <TextField id="pesolabel" layoutX="96.0" layoutY="22.0" prefHeight="25.0" prefWidth="66.0" />
+      <Label layoutX="31.0" layoutY="60.0" text="Água (%)" />
+      <Label layoutX="23.0" layoutY="94.0" text="Gordura (%)" />
+      <TextField fx:id="aguaLabel" id="aguaLabel" layoutX="96.0" layoutY="56.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField id="gorduralabel" layoutX="96.0" layoutY="90.0" prefHeight="25.0" prefWidth="66.0" />
+   </children>
+</AnchorPane>

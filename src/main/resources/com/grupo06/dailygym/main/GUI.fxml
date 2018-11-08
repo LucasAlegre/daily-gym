@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="244.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="73.0" layoutY="14.0" mnemonicParsing="false" text="Gerenciar Perfil" />
+      <Button layoutX="41.0" layoutY="155.0" mnemonicParsing="false" text="Reiniciar Acompanhamento" />
+      <Button layoutX="63.0" layoutY="118.0" mnemonicParsing="false" text="Sugestão de Treino" />
+      <Button layoutX="53.0" layoutY="52.0" mnemonicParsing="false" text="Criar" />
+      <Button layoutX="136.0" layoutY="52.0" mnemonicParsing="false" text="Atualizar" />
+      <Button layoutX="40.0" layoutY="85.0" mnemonicParsing="false" text="Consultar" />
+      <Button layoutX="136.0" layoutY="85.0" mnemonicParsing="false" text="Remover" />
+   </children>
+</AnchorPane>

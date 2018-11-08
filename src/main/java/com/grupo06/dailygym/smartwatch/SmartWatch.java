@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.smartwatch.controle;
+package com.grupo06.dailygym.smartwatch;
 
 import java.time.DayOfWeek;
 import java.util.Set;
@@ -8,12 +8,12 @@ import com.grupo06.dailygym.esteira.IEsteira;
 import com.grupo06.dailygym.esteira.Treino;
 import com.grupo06.dailygym.usuario.Usuario;
 
-public class SmartWatchControl implements ISmartWatch {
+public class SmartWatch implements ISmartWatch {
 	
 	private IEsteira esteira;
 	private IBalanca balanca;
 	
-	public SmartWatchControl() {
+	public SmartWatch() {
 		
 	}
 
