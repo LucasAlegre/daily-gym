@@ -10,9 +10,9 @@ import com.grupo06.dailygym.usuario.Usuario;
 
 public interface ISmartWatch {
 	
-	boolean sincronizaEsteira(IEsteira esteira);
+	boolean sincronizaEsteira(String ipEsteira);
 	
-	boolean sincronizaBalanca(IBalanca balanca);
+	boolean sincronizaBalanca(String ipBalanca);
 	
 	void reiniciarAcompanhamento();
 	
@@ -20,13 +20,4 @@ public interface ISmartWatch {
 	
 	void iniciaTreino();
 	
-	void novoUsuario(String nome, float altura, Set<DayOfWeek> diasDisponiveis);
-	
-	void alterarUsuario(String nome, float altura, Set<DayOfWeek> diasDisponiveis);
-
-	Usuario consultarUsuario();
-	
-	void deletarUsuario();
-	
-	void alterarDiasDisponiveis(Set<DayOfWeek> diasDisponiveis);
 }

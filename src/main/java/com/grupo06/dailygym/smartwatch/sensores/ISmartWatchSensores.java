@@ -1,6 +1,6 @@
 package com.grupo06.dailygym.smartwatch.sensores;
 
-public interface ISensores {
+public interface ISmartWatchSensores {
 
 	int getCaloriasPerdidas();
 	

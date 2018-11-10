@@ -1,6 +1,6 @@
 package com.grupo06.dailygym.smartwatch.sensores;
 
-public class Sensores implements ISensores {
+public class SmartWatchSensores implements ISmartWatchSensores {
 
 	@Override
 	public int getCaloriasPerdidas() {

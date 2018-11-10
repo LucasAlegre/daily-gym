@@ -6,7 +6,5 @@ public interface IEsteira {
 	
 	ArrayList<Treino> getSugestaoTreino(int tempo, int calorias, Intensidade intensidade);
 	
-	Exercicio getExercicio();
-	
-	void iniciaTreino();
+	void iniciaTreino(Treino treino);
 }

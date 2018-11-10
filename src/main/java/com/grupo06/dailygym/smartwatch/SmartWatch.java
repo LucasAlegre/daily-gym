@@ -3,10 +3,13 @@ package com.grupo06.dailygym.smartwatch;
 import java.time.DayOfWeek;
 import java.util.Set;
 
+import com.grupo06.dailygym.balanca.Balanca;
 import com.grupo06.dailygym.balanca.IBalanca;
+import com.grupo06.dailygym.esteira.Esteira;
 import com.grupo06.dailygym.esteira.IEsteira;
 import com.grupo06.dailygym.esteira.Treino;
 import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.esteira.*;
 
 public class SmartWatch implements ISmartWatch {
 	
@@ -14,19 +17,20 @@ public class SmartWatch implements ISmartWatch {
 	private IBalanca balanca;
 	
 	public SmartWatch() {
-		
+		sincronizaEsteira("1.xxx.xxx");
+		sincronizaBalanca("1.xxx.xxx");
 	}
 
 	@Override
-	public boolean sincronizaEsteira(IEsteira esteira) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean sincronizaEsteira(String ipEsteira) {
+		esteira = Esteira.connectEsteira(ipEsteira);
+		return true;
 	}
 
 	@Override
-	public boolean sincronizaBalanca(IBalanca balanca) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean sincronizaBalanca(String ipBalanca) {
+		balanca = Balanca.connectBalanca(ipBalanca);
+		return true;
 	}
 
 	@Override
@@ -43,36 +47,6 @@ public class SmartWatch implements ISmartWatch {
 
 	@Override
 	public void iniciaTreino() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void novoUsuario(String nome, float altura, Set<DayOfWeek> diasDisponiveis) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void alterarUsuario(String nome, float altura, Set<DayOfWeek> diasDisponiveis) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Usuario consultarUsuario() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deletarUsuario() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void alterarDiasDisponiveis(Set<DayOfWeek> diasDisponiveis) {
 		// TODO Auto-generated method stub
 		
 	}

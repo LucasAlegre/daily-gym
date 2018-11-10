@@ -1,5 +1,8 @@
 package com.grupo06.dailygym.esteira;
 
-public class Intensidade {
-
+public enum Intensidade {
+	LEVE,
+	MODERADO, 
+	INTENSO, 
+	CUSTOMIZADO;
 }
