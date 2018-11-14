@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.smartwatch.gui;
+package com.grupo06.dailygym.smartwatch.view;
 
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.grupo06.dailygym.smartwatch.facade.SmartWatchFacade;
+import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
 import com.grupo06.dailygym.usuario.Usuario;
 
 import javafx.event.ActionEvent;
@@ -83,6 +83,8 @@ public class SmartWatchViewController implements Initializable {
         idade.setPromptText("Idade");
         TextField altura = new TextField();
         altura.setPromptText("Altura");
+        TextField meta = new TextField();
+        meta.setPromptText("Meta Diária (cal)");
 
         grid.add(new Label("Nome"), 0, 0);
         grid.add(nome, 1, 0);
@@ -90,8 +92,10 @@ public class SmartWatchViewController implements Initializable {
         grid.add(idade, 1, 1);
         grid.add(new Label("Altura"), 0, 2);
         grid.add(altura, 1, 2);
+        grid.add(new Label("Meta Diária (cal)"), 0, 3);
+        grid.add(meta, 1, 3);
 
-        grid.add(new Label("Dias disponíveis para treino:"), 0, 3);
+        grid.add(new Label("Dias disponíveis para treino:"), 0, 4);
         HashMap<DayOfWeek, CheckBox> diasDisponiveis = new HashMap<DayOfWeek, CheckBox>();
         diasDisponiveis.put(DayOfWeek.MONDAY, new CheckBox("Segunda"));
         diasDisponiveis.put(DayOfWeek.TUESDAY, new CheckBox("Terça"));
@@ -100,13 +104,13 @@ public class SmartWatchViewController implements Initializable {
         diasDisponiveis.put(DayOfWeek.FRIDAY, new CheckBox("Sexta"));
         diasDisponiveis.put(DayOfWeek.SATURDAY, new CheckBox("Sábado"));
         diasDisponiveis.put(DayOfWeek.SUNDAY, new CheckBox("Domingo"));
-        grid.add(diasDisponiveis.get(DayOfWeek.MONDAY), 0, 4);
-        grid.add(diasDisponiveis.get(DayOfWeek.TUESDAY), 1, 4);
-        grid.add(diasDisponiveis.get(DayOfWeek.WEDNESDAY), 2, 4);
-        grid.add(diasDisponiveis.get(DayOfWeek.THURSDAY), 0, 5);
-        grid.add(diasDisponiveis.get(DayOfWeek.FRIDAY), 1, 5);
-        grid.add(diasDisponiveis.get(DayOfWeek.SATURDAY), 2, 5);
-        grid.add(diasDisponiveis.get(DayOfWeek.SUNDAY), 0, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.MONDAY), 0, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.TUESDAY), 1, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.WEDNESDAY), 2, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.THURSDAY), 0, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.FRIDAY), 1, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.SATURDAY), 2, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.SUNDAY), 0, 7);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -116,7 +120,8 @@ public class SmartWatchViewController implements Initializable {
             ActionEvent.ACTION, 
             evento -> {
                 // Check whether some conditions are fulfilled
-                if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
+                if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaMetaDiaria(meta.getText()) ||
+                	!validaAltura(altura.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
                     // The conditions are not fulfilled so we consume the event to prevent the dialog to close
                     evento.consume();
                 }
@@ -125,7 +130,7 @@ public class SmartWatchViewController implements Initializable {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.OK) {
-                return new String[]{nome.getText(), idade.getText(), altura.getText()};
+                return new String[]{nome.getText(), idade.getText(), altura.getText(), meta.getText()};
             }
             return null;
         });
@@ -141,8 +146,9 @@ public class SmartWatchViewController implements Initializable {
         	String nomePerfil = result.get()[0];
         	int idadePerfil = Integer.parseInt(result.get()[1]);
         	float alturaPerfil = Float.parseFloat(result.get()[2]);
+        	int metaPerfil = Integer.parseInt(result.get()[3]);
         	
-        	smartWatchFacade.criaPerfil(nomePerfil, idadePerfil, alturaPerfil, diasDiponiveisPerfil);
+        	smartWatchFacade.criaPerfil(nomePerfil, idadePerfil, alturaPerfil, metaPerfil, diasDiponiveisPerfil);
         	
             Alert dialogoResultado = new Alert(Alert.AlertType.INFORMATION);
             dialogoResultado.setHeaderText("Aviso");
@@ -153,7 +159,7 @@ public class SmartWatchViewController implements Initializable {
         }
     }
     
-    Boolean validaNome(String nome) {
+    private Boolean validaNome(String nome) {
     	if(nome.length() >= 100) {
     		return false;
     	}
@@ -163,7 +169,7 @@ public class SmartWatchViewController implements Initializable {
         return matcher.find();
     }
     
-    Boolean validaIdade(String idadeString) {
+    private Boolean validaIdade(String idadeString) {
     	try {
     		int idade = Integer.parseInt(idadeString);
         	if(idade > 0 && idade < 100)
@@ -175,7 +181,7 @@ public class SmartWatchViewController implements Initializable {
     	}
     }
     
-    Boolean validaAltura(String alturaString) {
+    private Boolean validaAltura(String alturaString) {
     	try {
     		float altura = Float.parseFloat(alturaString);
         	if(altura > 0.0 && altura < 3.0)
@@ -187,7 +193,19 @@ public class SmartWatchViewController implements Initializable {
     	}
     }
     
-    Boolean validaDiasDiponiveis(HashMap<DayOfWeek, CheckBox> diasDisponiveis) {
+    private Boolean validaMetaDiaria(String metaDiaria) {
+    	try {
+    		int meta = Integer.parseInt(metaDiaria);
+        	if(meta > 0)
+        		return true;
+        	else
+        		return false;
+    	} catch(NumberFormatException e) {
+    		return false;
+    	}
+    }
+    
+    private Boolean validaDiasDiponiveis(HashMap<DayOfWeek, CheckBox> diasDisponiveis) {
     	for(CheckBox c : diasDisponiveis.values()) {
     		if(c.isSelected())
     			return true;

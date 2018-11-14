@@ -7,53 +7,29 @@ import java.util.regex.Pattern;
 import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
 
-import com.grupo06.dailygym.balanca.Medida;
+import com.grupo06.dailygym.balanca.control.Medida;
 import com.grupo06.dailygym.esteira.Exercicio;
 import com.grupo06.dailygym.esteira.Treino;
 
-public class Usuario implements IUsuario {
+public class Usuario {
 
-	private static Usuario instance = null;
-	
 	private String nome;
 	private int idade;
 	private float altura;
+	private int metaDiaria;
 	private Set<DayOfWeek> diasDisponiveisTreino;
 	private ArrayList<Exercicio> exercicios;
 	private ArrayList<Medida> medidas;
 	private ArrayList<Treino> treinos;
-	private Boolean isCreated = false;
 	
-	public static Usuario getInstance(){
-		if(instance == null){
-			synchronized(Usuario.class){
-				if(instance == null){
-					instance = new Usuario();
-				}
-			}
-		}
-		return instance;
-	}
-	
-	private Usuario() {
-		//TODO: le banco de dados
-		medidas = new ArrayList<Medida>();
-	}
-	
-	public void criaUsario(String nome, int idade, float altura, Set<DayOfWeek> diasDisponiveis) throws InvalidParameterException {
+	public Usuario(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) throws InvalidParameterException {
 		this.setNome(nome);
 		this.setIdade(idade);
 		this.setAltura(altura);
 		this.setDiasDisponiveis(diasDisponiveis);
-		this.isCreated = true;
-	}
-	
-	public void setCreated(Boolean created) {
-		this.isCreated = created;
-	}
-	
-	public Boolean isCreated() {
-		return isCreated;
+		this.exercicios = new ArrayList<Exercicio>();
+		this.medidas = new ArrayList<Medida>();
+		this.treinos = new ArrayList<Treino>();
 	}
 	
 	public String getNome() {
@@ -90,6 +66,19 @@ public class Usuario implements IUsuario {
 	public float getAltura() {
 		return altura;
 	}
+	
+	public int getMetaDiaria() {
+		return this.metaDiaria;
+	}
+	
+	public void setMetaDiaria(int meta) {
+		if(meta > 0) {
+			this.metaDiaria = meta;
+		}
+		else {
+			throw new InvalidParameterException();
+		}
+	}
 
 	public void setAltura(float altura) {
 		if(altura > 0.0 && altura < 3.0) {
@@ -117,24 +106,20 @@ public class Usuario implements IUsuario {
 		return medidas.get(medidas.size() - 1).getPeso();
 	}
 
-	@Override
 	public float getIMC() {
 		return getPesoAtual() / (altura * altura);
 	}
 
-	@Override
 	public void deletaHistorico() {
 		exercicios.clear();
 		medidas.clear();
 		treinos.clear();
 	}
 
-	@Override
 	public void adicionaMedida(Medida medida) {
 		medidas.add(medida);
 	}
 
-	@Override
 	public void adicionaExercicio(Exercicio exercicio) {
 		exercicios.add(exercicio);
 	}

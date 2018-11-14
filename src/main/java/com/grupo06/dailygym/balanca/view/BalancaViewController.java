@@ -1,12 +1,12 @@
-package com.grupo06.dailygym.balanca.gui;
+package com.grupo06.dailygym.balanca.view;
 
 import java.net.URL;
 
 import java.util.ResourceBundle;
 
-import com.grupo06.dailygym.balanca.Balanca;
-import com.grupo06.dailygym.balanca.IBalanca;
-import com.grupo06.dailygym.balanca.Medida;
+import com.grupo06.dailygym.balanca.control.Balanca;
+import com.grupo06.dailygym.balanca.control.IBalanca;
+import com.grupo06.dailygym.balanca.control.Medida;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;

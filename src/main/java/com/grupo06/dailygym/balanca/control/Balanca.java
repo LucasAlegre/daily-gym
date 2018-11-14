@@ -1,6 +1,7 @@
-package com.grupo06.dailygym.balanca;
+package com.grupo06.dailygym.balanca.control;
 
 import com.grupo06.dailygym.balanca.sensores.BalancaSensores;
+import com.grupo06.dailygym.database.UsuarioDAOBancoMockado;
 import com.grupo06.dailygym.usuario.Usuario;
 
 public class Balanca implements IBalanca {
@@ -36,9 +37,12 @@ public class Balanca implements IBalanca {
 		
 		Medida medida = new Medida(pesoAtual, porcentagemGorduraAtual, porcentagemAguaAtual);
 		
-		Usuario usuario = Usuario.getInstance();
-		if(usuario.isCreated())
+		UsuarioDAOBancoMockado usuarioDB = UsuarioDAOBancoMockado.getInstance();
+		if(usuarioDB.usuarioExiste()) {
+			Usuario usuario = usuarioDB.getUsuario();
 			usuario.adicionaMedida(medida);
+			usuarioDB.atualizaUsuario(usuario);
+		}
 		
 		return medida;
 	}

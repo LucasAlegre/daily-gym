@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="182.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.balanca.gui.BalancaViewController">
+<AnchorPane prefHeight="182.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.balanca.view.BalancaViewController">
    <children>
       <Button id="pesarBt" layoutX="60.0" layoutY="126.0" mnemonicParsing="false" onAction="#onPesarClick" prefHeight="48.0" prefWidth="72.0" text="Pesar" />
       <Label layoutX="31.0" layoutY="26.0" text="Peso (Kg)" />

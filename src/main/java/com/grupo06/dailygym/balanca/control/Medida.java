@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.balanca;
+package com.grupo06.dailygym.balanca.control;
 
 import java.time.LocalDateTime;
 

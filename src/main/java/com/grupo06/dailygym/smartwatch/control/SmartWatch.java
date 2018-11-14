@@ -1,14 +1,14 @@
-package com.grupo06.dailygym.smartwatch;
+package com.grupo06.dailygym.smartwatch.control;
 
 import java.time.DayOfWeek;
 import java.util.Set;
 
-import com.grupo06.dailygym.balanca.Balanca;
-import com.grupo06.dailygym.balanca.IBalanca;
 import com.grupo06.dailygym.esteira.Esteira;
 import com.grupo06.dailygym.esteira.IEsteira;
 import com.grupo06.dailygym.esteira.Treino;
 import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.balanca.control.Balanca;
+import com.grupo06.dailygym.balanca.control.IBalanca;
 import com.grupo06.dailygym.esteira.*;
 
 public class SmartWatch implements ISmartWatch {
@@ -31,12 +31,6 @@ public class SmartWatch implements ISmartWatch {
 	public boolean sincronizaBalanca(String ipBalanca) {
 		balanca = Balanca.connectBalanca(ipBalanca);
 		return true;
-	}
-
-	@Override
-	public void reiniciarAcompanhamento() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

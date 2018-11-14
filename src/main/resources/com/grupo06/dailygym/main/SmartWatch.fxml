@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="267.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.smartwatch.gui.SmartWatchViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="267.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.smartwatch.view.SmartWatchViewController">
    <children>
       <Button layoutX="85.0" layoutY="14.0" mnemonicParsing="false" onAction="#onGerenciarPerfilClick" text="Gerenciar Perfil" textAlignment="CENTER" />
       <Button layoutX="52.0" layoutY="173.0" mnemonicParsing="false" onAction="#onReiniciarAcompanhamentoClick" text="Reiniciar Acompanhamento" />
