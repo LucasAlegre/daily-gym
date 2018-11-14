@@ -1,9 +1,9 @@
-package com.grupo06.dailygym.database;
+package com.grupo06.dailygym.usuario.DAO;
 
 import java.time.DayOfWeek;
 import java.util.Set;
 
-import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.usuario.model.Usuario;
 
 public interface UsuarioDAO {
 

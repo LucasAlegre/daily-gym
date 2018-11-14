@@ -1,30 +1,32 @@
-package com.grupo06.dailygym.database;
+package com.grupo06.dailygym.usuario.DAO;
 
 import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
 import java.util.Set;
 
-import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.database.BancoDeDadosFicticio;
+import com.grupo06.dailygym.usuario.model.Usuario;
 
-public class UsuarioDAOBancoMockado implements UsuarioDAO {
+public class UsuarioDAOBancoFicticio implements UsuarioDAO {
 	
-	private static UsuarioDAOBancoMockado instance = null;
+	private static UsuarioDAOBancoFicticio instance = null;
 	private Usuario usuarioNoBD;
 	private boolean usuarioExiste = false;
+	private BancoDeDadosFicticio bancoDeDados;
 	
-	public static UsuarioDAOBancoMockado getInstance(){
+	public static UsuarioDAOBancoFicticio getInstance(){
 		if(instance == null){
-			synchronized(UsuarioDAOBancoMockado.class){
+			synchronized(UsuarioDAOBancoFicticio.class){
 				if(instance == null){
-					instance = new UsuarioDAOBancoMockado();
+					instance = new UsuarioDAOBancoFicticio();
 				}
 			}
 		}
 		return instance;
 	}
 	
-	private UsuarioDAOBancoMockado() {
-		
+	private UsuarioDAOBancoFicticio() {
+		this.bancoDeDados = new BancoDeDadosFicticio();
 	}
 
 	@Override

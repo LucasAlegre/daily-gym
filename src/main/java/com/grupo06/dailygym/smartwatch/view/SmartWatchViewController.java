@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
-import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.usuario.model.Usuario;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

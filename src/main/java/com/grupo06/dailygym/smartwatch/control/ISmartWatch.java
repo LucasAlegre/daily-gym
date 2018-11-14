@@ -6,7 +6,7 @@ import java.util.Set;
 import com.grupo06.dailygym.balanca.control.IBalanca;
 import com.grupo06.dailygym.esteira.IEsteira;
 import com.grupo06.dailygym.esteira.Treino;
-import com.grupo06.dailygym.usuario.Usuario;
+import com.grupo06.dailygym.usuario.model.Usuario;
 
 public interface ISmartWatch {
 	

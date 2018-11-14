@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.usuario;
+package com.grupo06.dailygym.usuario.model;
 
 import java.util.ArrayList;
 import java.util.Set;
