@@ -2,6 +2,7 @@ package com.grupo06.dailygym.smartwatch.view;
 
 import java.net.URL;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -11,7 +12,10 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.grupo06.dailygym.balanca.control.Medida;
 import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
+import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
+import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
 import com.grupo06.dailygym.usuario.model.Usuario;
 
 import javafx.event.ActionEvent;
@@ -42,6 +46,9 @@ public class SmartWatchViewController implements Initializable {
 
     @FXML
     private Button removerBt;
+    
+    @FXML
+    private TextField batimentoField;
 
 	private SmartWatchFacade smartWatchFacade;
 	
@@ -49,6 +56,7 @@ public class SmartWatchViewController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		smartWatchFacade = new SmartWatchFacade();
+		daemonBatimentoCardiaco();
 	}
 	
     @FXML
@@ -230,19 +238,35 @@ public class SmartWatchViewController implements Initializable {
     	updateButtonsStatus();
     }
     
-    void updateButtonsStatus() {
+    private void updateButtonsStatus() {
     	boolean isUserCreated = smartWatchFacade.isUserCreated();	
 		criarBt.setDisable(isUserCreated);
 		consultarBt.setDisable(!isUserCreated);
 		removerBt.setDisable(!isUserCreated);
 		atualizarBt.setDisable(!isUserCreated);
     }
+
     
-    void disableButtons() {
-    	criarBt.setDisable(true);
-    	consultarBt.setDisable(true);
-    	atualizarBt.setDisable(true);
-    	removerBt.setDisable(true);
+    private void daemonBatimentoCardiaco() {
+    	Thread daemon = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                	
+                	int batimentoCardiaco = smartWatchFacade.getBatimentoCardiaco();
+                	batimentoField.setText(Integer.toString(batimentoCardiaco));
+                	
+	            	try {
+	            		Thread.sleep(3000);
+	            	} catch(InterruptedException e) {
+	            		
+	            	}
+                	
+                }   
+            }
+		});
+		daemon.setDaemon(true);
+		daemon.start();
     }
 
 }

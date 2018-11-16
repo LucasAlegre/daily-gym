@@ -14,8 +14,10 @@ public interface ISmartWatch {
 	
 	boolean sincronizaBalanca(String ipBalanca);
 	
-	Treino getSugestaoTreino();
+	int getBatimentoCardiaco();
 	
-	void iniciaTreino();
+	Treino[] getSugestaoTreino();
+	
+	void iniciaTreino(Treino treino);
 	
 }

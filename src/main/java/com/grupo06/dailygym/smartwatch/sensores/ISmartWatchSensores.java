@@ -5,4 +5,6 @@ public interface ISmartWatchSensores {
 	int getCaloriasPerdidas();
 	
 	int getBatimentoCardiaco();
+	
+	int getDistanciaPercorrida();
 }

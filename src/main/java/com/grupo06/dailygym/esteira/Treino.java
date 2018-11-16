@@ -1,5 +1,9 @@
 package com.grupo06.dailygym.esteira;
 
-public class Treino {
+import java.time.LocalDate;
 
+public abstract class Treino {
+
+	private LocalDate data;
+	private Intensidade intensidade;
 }

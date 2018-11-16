@@ -17,6 +17,10 @@ public class SmartWatchFacade {
 		smartWatch = new SmartWatch();
 	}
 	
+	public int getBatimentoCardiaco() {
+		return this.smartWatch.getBatimentoCardiaco();
+	}
+	
 	public void criaPerfil(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
 		try {

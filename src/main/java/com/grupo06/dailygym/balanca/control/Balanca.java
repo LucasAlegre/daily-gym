@@ -1,5 +1,7 @@
 package com.grupo06.dailygym.balanca.control;
 
+import java.util.ArrayList;
+
 import com.grupo06.dailygym.balanca.sensores.BalancaSensores;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
@@ -9,6 +11,7 @@ public class Balanca implements IBalanca {
 	
 	private static Balanca instance = null;
 	private BalancaSensores sensores;
+	private ArrayList<Medida> bufferMedida;
 	private String ip;
 	
 	public static IBalanca connectBalanca(String ip) {
@@ -28,24 +31,29 @@ public class Balanca implements IBalanca {
 	private Balanca(String ip){
 		this.ip = ip;
 		this.sensores = new BalancaSensores();
+		this.bufferMedida = new ArrayList<Medida>();
 	}
 
 	@Override
-	public Medida realizarMedicao() {
+	public synchronized Medida realizarMedicao()  {
 		int pesoAtual = sensores.getPeso();
 		int porcentagemGorduraAtual = sensores.getPorcentagemGordura();
 		int porcentagemAguaAtual = sensores.getPorcentagemAgua();
 		
 		Medida medida = new Medida(pesoAtual, porcentagemGorduraAtual, porcentagemAguaAtual);
 		
-		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
-		if(usuarioDao.usuarioExiste()) {
-			Usuario usuario = usuarioDao.getUsuario();
-			usuario.adicionaMedida(medida);
-			usuarioDao.atualizaUsuario(usuario);
-		}
+		this.bufferMedida.add(medida);
 		
 		return medida;
 	}
+
+	@Override
+	public synchronized ArrayList<Medida> getMedicoes() {
+		ArrayList<Medida> medidas = this.bufferMedida;
+		this.bufferMedida = new ArrayList<Medida>();
+		return medidas;
+	}
+	
+	
 	
 }

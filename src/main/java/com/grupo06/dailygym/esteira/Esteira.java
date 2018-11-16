@@ -28,7 +28,7 @@ public class Esteira implements IEsteira {
 	}
 	
 	@Override
-	public ArrayList<Treino> getSugestaoTreino(int tempo, int calorias, Intensidade intensidade) {
+	public Treino[] getSugestaoTreino(int tempo, int calorias, Intensidade intensidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}

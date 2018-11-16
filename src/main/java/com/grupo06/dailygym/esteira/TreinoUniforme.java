@@ -1,5 +1,5 @@
 package com.grupo06.dailygym.esteira;
 
-public class Exercicio {
+public class TreinoUniforme extends Treino {
 
 }

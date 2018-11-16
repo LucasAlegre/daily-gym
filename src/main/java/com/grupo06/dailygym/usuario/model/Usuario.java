@@ -8,8 +8,8 @@ import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
 
 import com.grupo06.dailygym.balanca.control.Medida;
-import com.grupo06.dailygym.esteira.Exercicio;
 import com.grupo06.dailygym.esteira.Treino;
+import com.grupo06.dailygym.smartwatch.control.Exercicio;
 
 public class Usuario {
 
