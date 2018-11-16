@@ -32,6 +32,13 @@ public class Usuario {
 		this.treinos = new ArrayList<Treino>();
 	}
 	
+	public void atualizaDados(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) throws InvalidParameterException {
+		this.setNome(nome);
+		this.setIdade(idade);
+		this.setAltura(altura);
+		this.setDiasDisponiveis(diasDisponiveis);
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -122,5 +129,21 @@ public class Usuario {
 
 	public void adicionaExercicio(Exercicio exercicio) {
 		exercicios.add(exercicio);
+	}
+	
+	public void adicionaTreino(Treino treino) {
+		treinos.add(treino);
+	}
+	
+	public ArrayList<Medida> getMedidas(){
+		return this.medidas;
+	}
+	
+	public ArrayList<Exercicio> getExercicios(){
+		return this.exercicios;
+	}
+	
+	public ArrayList<Treino> getTreinos(){
+		return this.treinos;
 	}
 }	

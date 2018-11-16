@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IEsteira {
 	
-	Treino[] getSugestaoTreino(int tempo, int calorias, Intensidade intensidade);
+	Treino getSugestaoTreino(int caloriasParaQueimar, Intensidade intensidade);
 	
-	void iniciaTreino(Treino treino);
+	void executaTreino(Treino treino);
 }

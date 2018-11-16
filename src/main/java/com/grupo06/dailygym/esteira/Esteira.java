@@ -28,13 +28,13 @@ public class Esteira implements IEsteira {
 	}
 	
 	@Override
-	public Treino[] getSugestaoTreino(int tempo, int calorias, Intensidade intensidade) {
+	public Treino getSugestaoTreino(int caloriasParaQueimar, Intensidade intensidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void iniciaTreino(Treino treino) {
+	public void executaTreino(Treino treino) {
 		// TODO Auto-generated method stub
 		
 	}

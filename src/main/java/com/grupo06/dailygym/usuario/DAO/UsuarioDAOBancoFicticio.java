@@ -11,7 +11,7 @@ public class UsuarioDAOBancoFicticio implements UsuarioDAO {
 	
 	private static UsuarioDAOBancoFicticio instance = null;
 	private Usuario usuarioNoBD;
-	private boolean usuarioExiste = false;
+	private boolean usuarioExiste;
 	private BancoDeDadosFicticio bancoDeDados;
 	
 	public static UsuarioDAOBancoFicticio getInstance(){
@@ -27,6 +27,7 @@ public class UsuarioDAOBancoFicticio implements UsuarioDAO {
 	
 	private UsuarioDAOBancoFicticio() {
 		this.bancoDeDados = new BancoDeDadosFicticio();
+		this.usuarioExiste = false;
 	}
 
 	@Override

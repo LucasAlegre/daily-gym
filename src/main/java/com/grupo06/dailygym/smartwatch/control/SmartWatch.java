@@ -47,25 +47,23 @@ public class SmartWatch implements ISmartWatch {
 	}
 
 	@Override
-	public Treino[] getSugestaoTreino() {
+	public Treino getSugestaoTreino(Intensidade intensidade) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
 		Usuario usuario = usuarioDao.getUsuario();
 		
 		DayOfWeek diaAtual = LocalDate.now().getDayOfWeek();
 		if(usuario.getDiasDisponiveis().contains(diaAtual)) {
 			
-			return null;
+			return this.esteira.getSugestaoTreino(usuario.getMetaDiaria(), intensidade);
 		}
 		else {
 			return null;
-		}
-		
+		}	
 	}
 
 	@Override
-	public void iniciaTreino(Treino treino) {
-		// TODO Auto-generated method stub
-		
+	public void executaTreino(Treino treino) {
+		this.esteira.executaTreino(treino);
 	}
 	
 	private void daemonGetMedicoesBalanca() {
