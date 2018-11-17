@@ -3,6 +3,7 @@ package com.grupo06.dailygym.balanca.control;
 import java.util.ArrayList;
 
 import com.grupo06.dailygym.balanca.sensores.BalancaSensores;
+import com.grupo06.dailygym.balanca.sensores.IBalancaSensores;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
 import com.grupo06.dailygym.usuario.model.Usuario;
@@ -10,7 +11,7 @@ import com.grupo06.dailygym.usuario.model.Usuario;
 public class Balanca implements IBalanca {
 	
 	private static Balanca instance = null;
-	private BalancaSensores sensores;
+	private IBalancaSensores sensores;
 	private ArrayList<Medida> bufferMedida;
 	private String ip;
 	
