@@ -16,5 +16,10 @@
       <Button id="consultarBt" fx:id="consultarBt" disable="true" layoutX="149.0" layoutY="52.0" mnemonicParsing="false" onAction="#onConsultarClick" text="Consultar" />
       <Button id="removerBt" fx:id="removerBt" disable="true" layoutX="149.0" layoutY="85.0" mnemonicParsing="false" onAction="#onRemoverBt" prefHeight="25.0" prefWidth="67.0" text="Remover" />
       <TextField id="batimentoField" fx:id="batimentoField" editable="false" layoutX="237.0" layoutY="2.0" prefHeight="25.0" prefWidth="27.0" />
+      <ImageView fitHeight="25.0" fitWidth="27.0" layoutX="211.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@heart.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
