@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.esteira;
+package com.grupo06.dailygym.esteira.control;
 
 import java.util.ArrayList;
 

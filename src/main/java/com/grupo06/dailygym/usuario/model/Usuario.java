@@ -6,9 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import com.grupo06.dailygym.balanca.control.Medida;
-import com.grupo06.dailygym.esteira.Treino;
+import com.grupo06.dailygym.esteira.control.Treino;
 import com.grupo06.dailygym.smartwatch.control.Exercicio;
 
 public class Usuario {
@@ -26,6 +27,7 @@ public class Usuario {
 		this.setNome(nome);
 		this.setIdade(idade);
 		this.setAltura(altura);
+		this.setMetaDiaria(metaDiaria);
 		this.setDiasDisponiveis(diasDisponiveis);
 		this.exercicios = new ArrayList<Exercicio>();
 		this.medidas = new ArrayList<Medida>();
@@ -36,6 +38,7 @@ public class Usuario {
 		this.setNome(nome);
 		this.setIdade(idade);
 		this.setAltura(altura);
+		this.setMetaDiaria(metaDiaria);
 		this.setDiasDisponiveis(diasDisponiveis);
 	}
 	
@@ -110,7 +113,24 @@ public class Usuario {
 	}
 
 	public float getPesoAtual() {
-		return medidas.get(medidas.size() - 1).getPeso();
+		if(!medidas.isEmpty())
+			return medidas.get(medidas.size() - 1).getPeso();
+		else
+			return -1;
+	}
+	
+	public float getPorcentualGorduraAtual() {
+		if(!medidas.isEmpty())
+			return medidas.get(medidas.size() - 1).getPorcentagemGordura();
+		else
+			return -1;
+	}
+	
+	public float getPorcentualAguaAtual() {
+		if(!medidas.isEmpty())
+			return medidas.get(medidas.size() - 1).getPorcentagemAgua();
+		else
+			return -1;
 	}
 
 	public float getIMC() {
@@ -145,5 +165,15 @@ public class Usuario {
 	
 	public ArrayList<Treino> getTreinos(){
 		return this.treinos;
+	}
+	
+	public int getDistanciaPercorridaHoje() {
+		int distancia = 0;
+		for(Exercicio e : exercicios) {
+			if(e.getData().equals(LocalDate.now())) {
+				distancia += e.getDistanciaPercorrida();
+			}
+		}
+		return distancia;
 	}
 }	

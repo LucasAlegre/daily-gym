@@ -21,8 +21,10 @@ public class SmartWatchFacade {
 		return this.smartWatch.getBatimentoCardiaco();
 	}
 	
+	public boolean isBatimentoElevado() {
+		return this.smartWatch.isBatimentoElevado();
+	}
 	
-	//TODO : Métodos relacionados ao smart watch
 	
 	public void criaPerfil(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();

@@ -18,13 +18,16 @@ import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
 import com.grupo06.dailygym.usuario.model.Usuario;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
@@ -70,8 +73,34 @@ public class SmartWatchViewController implements Initializable {
     }
 
     @FXML
+    void onTreinoCustomizadoClick(ActionEvent event) {
+    	
+    }
+    
+    @FXML
     void onSugestaoDeTreinoClick(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Sugestão de Treino");
+    	alert.setHeaderText("Qual a intensidade?");
+    	alert.setContentText("Leve, moderado ou intenso:");
 
+    	ButtonType buttonTypeOne = new ButtonType("LEVE");
+    	ButtonType buttonTypeTwo = new ButtonType("MODERADO");
+    	ButtonType buttonTypeThree = new ButtonType("INTENSO");
+    	ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+    	alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == buttonTypeOne){
+    	    // ... user chose "One"
+    	} else if (result.get() == buttonTypeTwo) {
+    	    // ... user chose "Two"
+    	} else if (result.get() == buttonTypeThree) {
+    	    // ... user chose "Three"
+    	} else {
+    	    // ... user chose CANCEL or closed the dialog
+    	}
     }
 
     @FXML
@@ -229,12 +258,14 @@ public class SmartWatchViewController implements Initializable {
 
     @FXML
     void onConsultarClick(ActionEvent event) {
-
+    	Usuario usuario = smartWatchFacade.consultaPerfil();
+    	mostrarUsuario(usuario);
     }
 
     @FXML
     void onRemoverBt(ActionEvent event) {
-    	
+        // TODO: Alert tem certeza?
+    	smartWatchFacade.removePerfil();
     	updateButtonsStatus();
     }
     
@@ -245,7 +276,38 @@ public class SmartWatchViewController implements Initializable {
 		removerBt.setDisable(!isUserCreated);
 		atualizarBt.setDisable(!isUserCreated);
     }
+    
+    private void mostrarUsuario(Usuario usuario) {
+    	Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setTitle("Consulta do Perfil");
+        dialog.setHeaderText("Dados:");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
 
+        grid.add(new Label("Nome: " + usuario.getNome()), 0, 0);
+        grid.add(new Label("Idade: " + usuario.getIdade()), 0, 1);
+        grid.add(new Label("Altura: " + usuario.getAltura()), 0, 2);
+        grid.add(new Label("Meta Diária (cal): " + usuario.getMetaDiaria()), 0, 3);
+        grid.add(new Label("IMC: " + usuario.getIMC()), 0, 4);
+        grid.add(new Label("Peso (Kg): " + usuario.getPesoAtual()), 0, 5);
+        grid.add(new Label("Água (%): " + usuario.getPorcentualAguaAtual()), 0, 6);
+        grid.add(new Label("Gordura (%): " + usuario.getPorcentualGorduraAtual()), 0, 7);
+
+        grid.add(new Label("Dias disponíveis para treino:"), 0, 8);
+        String dias = "";
+        for(DayOfWeek day : usuario.getDiasDisponiveis()) {
+        	dias += day.toString() + " ";
+        }
+        grid.add(new Label(dias), 0, 9);
+        grid.add(new Label("Distância Percoridda Hoje (Km): " + usuario.getDistanciaPercorridaHoje()/1000.0), 0, 10);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.show();
+
+    }
     
     private void daemonBatimentoCardiaco() {
     	Thread daemon = new Thread(new Runnable() {
@@ -256,12 +318,22 @@ public class SmartWatchViewController implements Initializable {
                 	int batimentoCardiaco = smartWatchFacade.getBatimentoCardiaco();
                 	batimentoField.setText(Integer.toString(batimentoCardiaco));
                 	
+                	if(smartWatchFacade.isBatimentoElevado()) {
+                		Platform.runLater(new Runnable() {
+                			@Override
+                			public void run() {
+	                            Alert dialogoResultado = new Alert(Alert.AlertType.WARNING);
+	                            dialogoResultado.setHeaderText("Batimento Cardíaco Elevado!");
+	                            dialogoResultado.setContentText("Por favor, procure um médico.");
+	                            dialogoResultado.showAndWait();
+                			}
+                		});
+                	}
 	            	try {
 	            		Thread.sleep(3000);
 	            	} catch(InterruptedException e) {
 	            		
-	            	}
-                	
+	            	}              	
                 }   
             }
 		});

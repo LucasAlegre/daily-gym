@@ -24,7 +24,15 @@ public class Main extends Application {
 			Stage balancaStage = new Stage();
 			balancaStage.setScene(new Scene(rootBalanca));
 			balancaStage.setTitle("Balança");
+			balancaStage.setX(600);
 			balancaStage.show();
+			
+			Parent rootEsteira = FXMLLoader.load(getClass().getResource("Esteira.fxml"));
+			Stage esteiraStage = new Stage();
+			esteiraStage.setScene(new Scene(rootEsteira));
+			esteiraStage.setX(1100);
+			esteiraStage.setTitle("Esteira");
+			esteiraStage.show();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

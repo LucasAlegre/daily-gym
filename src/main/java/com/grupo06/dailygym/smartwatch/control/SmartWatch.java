@@ -5,9 +5,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Set;
 
-import com.grupo06.dailygym.esteira.Esteira;
-import com.grupo06.dailygym.esteira.IEsteira;
-import com.grupo06.dailygym.esteira.Treino;
 import com.grupo06.dailygym.smartwatch.sensores.ISmartWatchSensores;
 import com.grupo06.dailygym.smartwatch.sensores.SmartWatchSensores;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
@@ -16,7 +13,11 @@ import com.grupo06.dailygym.usuario.model.Usuario;
 import com.grupo06.dailygym.balanca.control.Balanca;
 import com.grupo06.dailygym.balanca.control.IBalanca;
 import com.grupo06.dailygym.balanca.control.Medida;
-import com.grupo06.dailygym.esteira.*;
+import com.grupo06.dailygym.esteira.control.Esteira;
+import com.grupo06.dailygym.esteira.control.IEsteira;
+import com.grupo06.dailygym.esteira.control.Intensidade;
+import com.grupo06.dailygym.esteira.control.Treino;
+import com.grupo06.dailygym.esteira.sensores.*;
 
 public class SmartWatch implements ISmartWatch {
 	
@@ -33,7 +34,6 @@ public class SmartWatch implements ISmartWatch {
 		daemonDetectaExercicios();
 	}		
 		
-
 	@Override
 	public boolean sincronizaEsteira(String ipEsteira) {
 		this.esteira = Esteira.connectEsteira(ipEsteira);
@@ -83,7 +83,7 @@ public class SmartWatch implements ISmartWatch {
                 		}
                 	}
                 	try {
-                		Thread.sleep(3000);
+                		Thread.sleep(1000);
                 	} catch(InterruptedException e) {
                 		
                 	}
@@ -125,6 +125,11 @@ public class SmartWatch implements ISmartWatch {
 	@Override
 	public int getBatimentoCardiaco() {
 		return this.sensores.getBatimentoCardiaco();
+	}
+	
+	@Override
+	public boolean isBatimentoElevado() {
+		return this.sensores.getBatimentoCardiaco() > 150;
 	}
 
 }

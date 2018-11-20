@@ -10,7 +10,7 @@
    <children>
       <Button layoutX="85.0" layoutY="14.0" mnemonicParsing="false" onAction="#onGerenciarPerfilClick" text="Gerenciar Perfil" textAlignment="CENTER" />
       <Button layoutX="52.0" layoutY="173.0" mnemonicParsing="false" onAction="#onReiniciarAcompanhamentoClick" text="Reiniciar Acompanhamento" />
-      <Button layoutX="69.0" layoutY="124.0" mnemonicParsing="false" onAction="#onSugestaoDeTreinoClick" prefHeight="33.0" prefWidth="129.0" text="Sugestão de Treino" />
+      <Button layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#onSugestaoDeTreinoClick" prefHeight="33.0" prefWidth="111.0" text="Treino Sugerido" />
       <Button id="criarBt" fx:id="criarBt" disable="true" layoutX="45.0" layoutY="52.0" mnemonicParsing="false" onAction="#onCriarClick" prefHeight="25.0" prefWidth="63.0" text="Criar" />
       <Button id="atualizarBt" fx:id="atualizarBt" disable="true" layoutX="45.0" layoutY="85.0" mnemonicParsing="false" onAction="#onAtualizarClick" text="Atualizar" />
       <Button id="consultarBt" fx:id="consultarBt" disable="true" layoutX="149.0" layoutY="52.0" mnemonicParsing="false" onAction="#onConsultarClick" text="Consultar" />
@@ -21,5 +21,6 @@
             <Image url="@heart.jpg" />
          </image>
       </ImageView>
+      <Button layoutX="134.0" layoutY="125.0" mnemonicParsing="false" onAction="#onTreinoCustomizadoClick" prefHeight="33.0" prefWidth="123.0" text="Treino Customizado" />
    </children>
 </AnchorPane>
