@@ -20,19 +20,30 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
+			/*
 			Parent rootBalanca = FXMLLoader.load(getClass().getResource("Balanca.fxml"));
 			Stage balancaStage = new Stage();
 			balancaStage.setScene(new Scene(rootBalanca));
-			balancaStage.setTitle("Balança");
+			balancaStage.setTitle("Balanï¿½a");
 			balancaStage.setX(600);
 			balancaStage.show();
-			
+			*/
+			/*
 			Parent rootEsteira = FXMLLoader.load(getClass().getResource("Esteira.fxml"));
 			Stage esteiraStage = new Stage();
 			esteiraStage.setScene(new Scene(rootEsteira));
 			esteiraStage.setX(1100);
 			esteiraStage.setTitle("Esteira");
 			esteiraStage.show();
+			*/
+			
+			Parent rootTreino = FXMLLoader.load(getClass().getResource("Treino.fxml"));
+			Stage treinoStage = new Stage();
+			treinoStage.setScene(new Scene(rootTreino));
+			treinoStage.setTitle("Treino");
+			treinoStage.setX(1100);
+			treinoStage.show();
+			
 			
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -6,4 +6,6 @@ public abstract class Treino {
 
 	private LocalDate data;
 	private Intensidade intensidade;
+	
+	
 }

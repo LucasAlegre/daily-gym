@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="182.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.balanca.view.BalancaViewController">
+   <children>
+      <Button id="leveBt" layoutX="60.0" layoutY="126.0" mnemonicParsing="false" onAction="#onLeveClick" prefHeight="48.0" prefWidth="72.0" text="Leve" />
+      <Button id="moderadoBt" layoutX="120.0" layoutY="140.0" mnemonicParsing="false" onAction="#onModeradoClick" prefHeight="48.0" prefWidth="72.0" text="Moderado" />
+   </children>
+</AnchorPane>
