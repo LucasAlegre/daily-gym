@@ -3,9 +3,11 @@ package com.grupo06.dailygym.esteira.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.grupo06.dailygym.balanca.control.Medida;
 import com.grupo06.dailygym.esteira.control.Esteira;
 import com.grupo06.dailygym.esteira.control.IEsteira;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
@@ -29,4 +31,13 @@ public class EsteiraViewController implements Initializable {
 		this.esteira = Esteira.connectEsteira("1.xxx.xxx");
 	}
 
+	@FXML
+    void onLeveClick(ActionEvent event) {
+    	
+    	Treino treino = esteira.criarTreino();
+    	
+    	velocidade.setText(Integer.toString(medida.getPeso()));
+    	gorduraField.setText(Integer.toString(medida.getPorcentagemAgua()));
+    	aguaField.setText(Integer.toString(medida.getPorcentagemGordura()));
+    }
 }
