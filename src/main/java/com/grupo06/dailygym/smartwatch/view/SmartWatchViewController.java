@@ -69,7 +69,15 @@ public class SmartWatchViewController implements Initializable {
 
     @FXML
     void onReiniciarAcompanhamentoClick(ActionEvent event) {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Reiniciar acompanhamento");
+    	alert.setHeaderText("Confirmação");
+    	alert.setContentText("Você tem certeza que deseja reiniciar o acompanhamento?");
 
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		smartWatchFacade.reiniciarAcompanhamento();
+    	}
     }
 
     @FXML
@@ -84,9 +92,9 @@ public class SmartWatchViewController implements Initializable {
     	alert.setHeaderText("Qual a intensidade?");
     	alert.setContentText("Leve, moderado ou intenso:");
 
-    	ButtonType buttonTypeOne = new ButtonType("LEVE");
-    	ButtonType buttonTypeTwo = new ButtonType("MODERADO");
-    	ButtonType buttonTypeThree = new ButtonType("INTENSO");
+    	ButtonType buttonTypeOne = new ButtonType("Leve");
+    	ButtonType buttonTypeTwo = new ButtonType("Moderado");
+    	ButtonType buttonTypeThree = new ButtonType("Intenso");
     	ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
     	alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
@@ -119,17 +127,17 @@ public class SmartWatchViewController implements Initializable {
         TextField idade = new TextField();
         idade.setPromptText("Idade");
         TextField altura = new TextField();
-        altura.setPromptText("Altura");
+        altura.setPromptText("Altura (m)");
         TextField meta = new TextField();
-        meta.setPromptText("Meta Diária (cal)");
+        meta.setPromptText("Meta Diária (kcal)");
 
         grid.add(new Label("Nome"), 0, 0);
         grid.add(nome, 1, 0);
         grid.add(new Label("Idade"), 0, 1);
         grid.add(idade, 1, 1);
-        grid.add(new Label("Altura"), 0, 2);
+        grid.add(new Label("Altura (m)"), 0, 2);
         grid.add(altura, 1, 2);
-        grid.add(new Label("Meta Diária (cal)"), 0, 3);
+        grid.add(new Label("Meta Diária (kcal)"), 0, 3);
         grid.add(meta, 1, 3);
 
         grid.add(new Label("Dias disponíveis para treino:"), 0, 4);
@@ -157,8 +165,8 @@ public class SmartWatchViewController implements Initializable {
             ActionEvent.ACTION, 
             evento -> {
                 // Check whether some conditions are fulfilled
-                if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaMetaDiaria(meta.getText()) ||
-                	!validaAltura(altura.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
+                if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || 
+                	!validaMetaDiaria(meta.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
                     // The conditions are not fulfilled so we consume the event to prevent the dialog to close
                     evento.consume();
                 }
@@ -196,8 +204,16 @@ public class SmartWatchViewController implements Initializable {
         }
     }
     
+    private void dadoInvalido(String mensagem){
+		Alert dialogoResultado = new Alert(Alert.AlertType.INFORMATION);
+        dialogoResultado.setHeaderText("Aviso");
+        dialogoResultado.setContentText(mensagem);
+        dialogoResultado.show();
+    }
+    
     private Boolean validaNome(String nome) {
     	if(nome.length() >= 100) {
+    		dadoInvalido("Nome inválido! Deve conter menos de 100 caracteres");
     		return false;
     	}
     	String regx = "^[\\p{L} .'-]+$";
@@ -211,9 +227,12 @@ public class SmartWatchViewController implements Initializable {
     		int idade = Integer.parseInt(idadeString);
         	if(idade > 0 && idade < 100)
         		return true;
-        	else
+        	else{
+        		dadoInvalido("Idade inválida! Deve ser um valor entre 0 e 100.");
         		return false;
+        	}
     	} catch(NumberFormatException e) {
+    		dadoInvalido("Idade inválida! Deve ser um valor entre 0 e 100.");
     		return false;
     	}
     }
@@ -223,9 +242,12 @@ public class SmartWatchViewController implements Initializable {
     		float altura = Float.parseFloat(alturaString);
         	if(altura > 0.0 && altura < 3.0)
         		return true;
-        	else
+        	else{
+        		dadoInvalido("Altura inválida! Deve ser um valor entre 0.0 e 3.0.");
         		return false;
+        	}
     	} catch(NumberFormatException e) {
+    		dadoInvalido("Altura inválida! Deve ser um valor entre 0.0 e 3.0.");
     		return false;
     	}
     }
@@ -235,9 +257,12 @@ public class SmartWatchViewController implements Initializable {
     		int meta = Integer.parseInt(metaDiaria);
         	if(meta > 0)
         		return true;
-        	else
+        	else{
+        		dadoInvalido("Meta diária inválida! Deve ser um valor maior do que zero.");
         		return false;
+        	}
     	} catch(NumberFormatException e) {
+    		dadoInvalido("Meta diária inválida! Deve ser um valor maior do que zero.");
     		return false;
     	}
     }
@@ -248,12 +273,108 @@ public class SmartWatchViewController implements Initializable {
     			return true;
     	}
     	// Nenhum dia marcado
+    	dadoInvalido("Selecione pelo menos um dia disponível.");
     	return false;
     }
 
     @FXML
     void onAtualizarClick(ActionEvent event) {
+    	Dialog<String[]> dialog = new Dialog<>();
+        dialog.setTitle("Atualizar Perfil");
+        dialog.setHeaderText("Preencha todos os campos:");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        
+    	Usuario usuario = smartWatchFacade.consultaPerfil();
+        
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
 
+        TextField nome = new TextField();
+        nome.setPromptText("Nome");
+        nome.setText(usuario.getNome());
+        TextField idade = new TextField();
+        idade.setPromptText("Idade");
+        idade.setText(Integer.toString(usuario.getIdade()));
+        TextField altura = new TextField();
+        altura.setPromptText("Altura (m)");
+        altura.setText(Float.toString(usuario.getAltura()));
+        TextField meta = new TextField();
+        meta.setPromptText("Meta Diária (kcal)");
+        meta.setText(Integer.toString(usuario.getMetaDiaria()));
+
+        grid.add(new Label("Nome"), 0, 0);
+        grid.add(nome, 1, 0);
+        grid.add(new Label("Idade"), 0, 1);
+        grid.add(idade, 1, 1);
+        grid.add(new Label("Altura (m)"), 0, 2);
+        grid.add(altura, 1, 2);
+        grid.add(new Label("Meta Diária (kcal)"), 0, 3);
+        grid.add(meta, 1, 3);
+
+        grid.add(new Label("Dias disponíveis para treino:"), 0, 4);
+        HashMap<DayOfWeek, CheckBox> diasDisponiveis = new HashMap<DayOfWeek, CheckBox>();
+        diasDisponiveis.put(DayOfWeek.MONDAY, new CheckBox("Segunda"));
+        diasDisponiveis.put(DayOfWeek.TUESDAY, new CheckBox("Terça"));
+        diasDisponiveis.put(DayOfWeek.WEDNESDAY, new CheckBox("Quarta"));
+        diasDisponiveis.put(DayOfWeek.THURSDAY, new CheckBox("Quinta"));
+        diasDisponiveis.put(DayOfWeek.FRIDAY, new CheckBox("Sexta"));
+        diasDisponiveis.put(DayOfWeek.SATURDAY, new CheckBox("Sábado"));
+        diasDisponiveis.put(DayOfWeek.SUNDAY, new CheckBox("Domingo"));
+        
+
+        for(DayOfWeek day : usuario.getDiasDisponiveis()) {
+        	CheckBox check = diasDisponiveis.get(day);
+        	check.setSelected(true);
+        }
+        
+        grid.add(diasDisponiveis.get(DayOfWeek.MONDAY), 0, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.TUESDAY), 1, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.WEDNESDAY), 2, 5);
+        grid.add(diasDisponiveis.get(DayOfWeek.THURSDAY), 0, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.FRIDAY), 1, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.SATURDAY), 2, 6);
+        grid.add(diasDisponiveis.get(DayOfWeek.SUNDAY), 0, 7);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        btOk.addEventFilter(
+            ActionEvent.ACTION, 
+            evento -> {
+                // Check whether some conditions are fulfilled
+                if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || 
+                    	!validaMetaDiaria(meta.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
+                    // The conditions are not fulfilled so we consume the event to prevent the dialog to close
+                    evento.consume();
+                }
+            }
+        );
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return new String[]{nome.getText(), idade.getText(), altura.getText(), meta.getText()};
+            }
+            return null;
+        });
+
+        Optional<String[]> result = dialog.showAndWait();
+        Set<DayOfWeek> diasDiponiveisPerfil = new HashSet<DayOfWeek>();
+        for(Entry<DayOfWeek, CheckBox> e : diasDisponiveis.entrySet()) {
+        	if (e.getValue().isSelected()) {
+        		diasDiponiveisPerfil.add(e.getKey());
+        	}
+        }
+        if(result.isPresent()) {
+        	String nomePerfil = result.get()[0];
+        	int idadePerfil = Integer.parseInt(result.get()[1]);
+        	float alturaPerfil = Float.parseFloat(result.get()[2]);
+        	int metaPerfil = Integer.parseInt(result.get()[3]);
+        	
+        	smartWatchFacade.atualizaPerfil(nomePerfil, idadePerfil, alturaPerfil, metaPerfil, diasDiponiveisPerfil);
+        	
+        }
     }
 
     @FXML
@@ -264,9 +385,16 @@ public class SmartWatchViewController implements Initializable {
 
     @FXML
     void onRemoverBt(ActionEvent event) {
-        // TODO: Alert tem certeza?
-    	smartWatchFacade.removePerfil();
-    	updateButtonsStatus();
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Remover perfil");
+    	alert.setHeaderText("Confirmação");
+    	alert.setContentText("Você tem certeza que deseja remover o perfil?");
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		smartWatchFacade.removePerfil();
+        	updateButtonsStatus();
+    	}
     }
     
     private void updateButtonsStatus() {
@@ -289,8 +417,8 @@ public class SmartWatchViewController implements Initializable {
 
         grid.add(new Label("Nome: " + usuario.getNome()), 0, 0);
         grid.add(new Label("Idade: " + usuario.getIdade()), 0, 1);
-        grid.add(new Label("Altura: " + usuario.getAltura()), 0, 2);
-        grid.add(new Label("Meta Diária (cal): " + usuario.getMetaDiaria()), 0, 3);
+        grid.add(new Label("Altura (m): " + usuario.getAltura()), 0, 2);
+        grid.add(new Label("Meta Diária (kcal): " + usuario.getMetaDiaria()), 0, 3);
         grid.add(new Label("IMC: " + usuario.getIMC()), 0, 4);
         grid.add(new Label("Peso (Kg): " + usuario.getPesoAtual()), 0, 5);
         grid.add(new Label("Água (%): " + usuario.getPorcentualAguaAtual()), 0, 6);

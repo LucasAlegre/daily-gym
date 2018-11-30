@@ -87,7 +87,6 @@ public class SmartWatch implements ISmartWatch {
                 	} catch(InterruptedException e) {
                 		
                 	}
-                	
                 }
             }
 		});
