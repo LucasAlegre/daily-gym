@@ -1,19 +1,28 @@
 package com.grupo06.dailygym.esteira.control;
 
+import java.time.LocalDate;
 import java.util.Random;
 import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
 import com.grupo06.dailygym.usuario.model.Usuario;
 
 public class TreinoUniforme extends Treino {
-	private float velocidade;
-	private int tempo;
-	private static Treino treino;
+	
+	private Treino treino;
 	private SmartWatchFacade facade;
 
+	public TreinoUniforme(int tempo, float velocidade, Intensidade intensidade) {
+		this.tempo = tempo;
+		this.velocidade = velocidade;
+		this.intensidade = intensidade;
+		this.data = LocalDate.now();
+	}
 	
 	public Treino geraTreinoUniforme(Intensidade intensidade, int caloriasParaQueimar) {
-		this.velocidade = generateVelocidade(intensidade);
-		this.tempo = calculaTempo(this.velocidade, caloriasParaQueimar);
+		int tempo = calculaTempo(this.velocidade, caloriasParaQueimar);
+		float velocidade = generateVelocidade(intensidade);
+		
+		TreinoUniforme treino = new TreinoUniforme(tempo, velocidade, intensidade);
+		
 		return treino;
 	}
 	
@@ -35,6 +44,7 @@ public class TreinoUniforme extends Treino {
 		} else {
 			velocidade = (float)(10.1 + generate.nextFloat()*(10.1 - 15.0)); 
 		} 
+		
 		return velocidade;
 	}
 	
