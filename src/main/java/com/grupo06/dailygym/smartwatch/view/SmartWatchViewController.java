@@ -99,7 +99,7 @@ public class SmartWatchViewController implements Initializable {
         Button uniforme = new Button("Uniforme");
         Button customizado = new Button("Customizado");
     	
-    	grid.add(new Label("Tempo"), 0, 0);
+    	grid.add(new Label("Tempo (minutos)"), 0, 0);
         grid.add(tempo, 1, 0);
         grid.add(uniforme, 0, 1);
         grid.add(customizado, 1, 1);
@@ -119,7 +119,7 @@ public class SmartWatchViewController implements Initializable {
     	velocidade3.setPromptText("Velocidade 3");
     	 
         uniforme.setOnAction(value ->  {
-        	grid.add(new Label("Velocidade"), 0, 2);
+        	grid.add(new Label("Velocidade (Km/h)"), 0, 2);
             grid.add(velocidade, 1, 2);
             customizado.setDisable(true);
             uniforme.setDisable(true);
@@ -133,9 +133,9 @@ public class SmartWatchViewController implements Initializable {
          });
         
         dupla.setOnAction(value ->  {
-        	grid.add(new Label("Velocidade 1"), 0, 3);
+        	grid.add(new Label("Velocidade 1 (Km/h)"), 0, 3);
             grid.add(velocidade1, 1, 3);
-        	grid.add(new Label("Velocidade 2"), 0, 4);
+        	grid.add(new Label("Velocidade 2 (Km/h)"), 0, 4);
             grid.add(velocidade2, 1, 4);
             
             dupla.setDisable(true);
@@ -144,11 +144,11 @@ public class SmartWatchViewController implements Initializable {
          });
         
         tripla.setOnAction(value ->  {
-        	grid.add(new Label("Velocidade 1"), 0, 3);
+        	grid.add(new Label("Velocidade 1 (Km/h)"), 0, 3);
             grid.add(velocidade1, 1, 3);
-        	grid.add(new Label("Velocidade 2"), 0, 4);
+        	grid.add(new Label("Velocidade 2 (Km/h)"), 0, 4);
             grid.add(velocidade2, 1, 4);
-        	grid.add(new Label("Velocidade 3"), 0, 5);
+        	grid.add(new Label("Velocidade 3 (Km/h)"), 0, 5);
             grid.add(velocidade3, 1, 5);
 
             dupla.setDisable(true);

@@ -9,8 +9,8 @@
    <children>
       <ProgressBar id="progressBar" fx:id="progressBar" layoutX="38.0" layoutY="79.0" prefWidth="200.0" progress="0.0" />
       <TextField fx:id="velocidadeField" editable="false" layoutX="47.0" layoutY="131.0" prefHeight="25.0" prefWidth="55.0" text="0" />
-      <Label layoutX="45.0" layoutY="106.0" text="Velocidade" />
-      <Label layoutX="166.0" layoutY="106.0" text="Tempo" />
+      <Label layoutX="45.0" layoutY="106.0" text="Velocidade (Km/h)" />
+      <Label layoutX="166.0" layoutY="106.0" text="Tempo (Minutos)" />
       <TextField fx:id="tempoField" editable="false" layoutX="155.0" layoutY="131.0" prefHeight="25.0" prefWidth="59.0" text="0" />
       <Button id="iniciarBt" onAction="#onIniciarClick" layoutX="97.0" layoutY="28.0" mnemonicParsing="false" text="Iniciar treino" />
    </children>
