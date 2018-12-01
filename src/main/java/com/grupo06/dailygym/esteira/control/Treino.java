@@ -40,7 +40,7 @@ public class Treino {
 		} else if (intensidade.equals(Intensidade.MODERADO)) {
 			velocidade = (float)(7.6 + generate.nextFloat()*(10 - 7.6));
 		} else {
-			velocidade = (float)(10.1 + generate.nextFloat()*(10.1 - 15.0)); 
+			velocidade = (float)(10.1 + generate.nextFloat()*(15.0 - 10.1)); 
 		} 
 		
 		return velocidade;

@@ -184,6 +184,9 @@ public class Usuario {
 				caloriasGastas += e.getCaloriasQueimadas();
 			}
 		}
-		return this.metaDiaria - caloriasGastas;
+		if( this.metaDiaria - caloriasGastas >= 0)
+			return this.metaDiaria - caloriasGastas;
+		else
+			return 0;
 	}
 }	
