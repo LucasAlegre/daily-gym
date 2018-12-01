@@ -82,6 +82,96 @@ public class SmartWatchViewController implements Initializable {
 
     @FXML
     void onTreinoCustomizadoClick(ActionEvent event) {
+    	Dialog<String[]> dialog = new Dialog<>();
+        dialog.setTitle("Treino customizado");
+        //dialog.setHeaderText("Preencha todos os campos:");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        TextField tempo = new TextField();
+        tempo.setPromptText("Tempo");
+        
+        Button uniforme = new Button("Uniforme");
+        Button customizado = new Button("Customizado");
+    	
+    	grid.add(new Label("Tempo"), 0, 0);
+        grid.add(tempo, 1, 0);
+        grid.add(uniforme, 0, 1);
+        grid.add(customizado, 1, 1);
+        
+
+        Button dupla = new Button("Dupla");
+        Button tripla = new Button("Tripla");
+        
+    	TextField velocidade = new TextField();
+    	velocidade.setPromptText("Velocidade");
+
+    	TextField velocidade1 = new TextField();
+    	velocidade1.setPromptText("Velocidade 1");
+    	TextField velocidade2 = new TextField();
+    	velocidade2.setPromptText("Velocidade 2");
+    	TextField velocidade3 = new TextField();
+    	velocidade3.setPromptText("Velocidade 3");
+        
+        uniforme.setOnAction(value ->  {
+        	grid.add(new Label("Velocidade"), 0, 2);
+            grid.add(velocidade, 1, 2);
+            customizado.setDisable(true);
+            uniforme.setDisable(true);
+         });
+
+        customizado.setOnAction(value ->  {            
+        	grid.add(dupla, 0, 2);
+            grid.add(tripla, 1, 2);
+            uniforme.setDisable(true);
+            customizado.setDisable(true);        
+         });
+        
+        dupla.setOnAction(value ->  {
+        	grid.add(new Label("Velocidade 1"), 0, 3);
+            grid.add(velocidade1, 1, 3);
+        	grid.add(new Label("Velocidade 2"), 0, 4);
+            grid.add(velocidade2, 1, 4);
+            
+            dupla.setDisable(true);
+            tripla.setDisable(true);
+         });
+        
+        tripla.setOnAction(value ->  {
+        	grid.add(new Label("Velocidade 1"), 0, 3);
+            grid.add(velocidade1, 1, 3);
+        	grid.add(new Label("Velocidade 2"), 0, 4);
+            grid.add(velocidade2, 1, 4);
+        	grid.add(new Label("Velocidade 3"), 0, 5);
+            grid.add(velocidade3, 1, 5);
+
+            dupla.setDisable(true);
+            tripla.setDisable(true);
+         });
+
+        grid.setPrefSize(300, 250);
+
+        dialog.getDialogPane().setContent(grid);
+        
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+        btOk.addEventFilter(
+            ActionEvent.ACTION, 
+            evento -> {
+                // Check whether some conditions are fulfilled
+                //if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || 
+                //	!validaMetaDiaria(meta.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
+                    // The conditions are not fulfilled so we consume the event to prevent the dialog to close
+                    evento.consume();
+                //}
+            }
+        );
+        
+        dialog.showAndWait();
+
     	
     }
     
