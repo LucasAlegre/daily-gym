@@ -24,7 +24,7 @@ public class Main extends Application {
 			Parent rootBalanca = FXMLLoader.load(getClass().getResource("Balanca.fxml"));
 			Stage balancaStage = new Stage();
 			balancaStage.setScene(new Scene(rootBalanca));
-			balancaStage.setTitle("Balanï¿½a");
+			balancaStage.setTitle("Balança");
 			balancaStage.setX(600);
 			balancaStage.show();
 			
@@ -36,12 +36,12 @@ public class Main extends Application {
 			esteiraStage.show();
 			
 			
-			Parent rootTreino = FXMLLoader.load(getClass().getResource("Treino.fxml"));
-			Stage treinoStage = new Stage();
-			treinoStage.setScene(new Scene(rootTreino));
-			treinoStage.setTitle("Treino");
-			treinoStage.setX(1100);
-			treinoStage.show();
+//			Parent rootTreino = FXMLLoader.load(getClass().getResource("Treino.fxml"));
+//			Stage treinoStage = new Stage();
+//			treinoStage.setScene(new Scene(rootTreino));
+//			treinoStage.setTitle("Treino");
+//			treinoStage.setX(1100);
+//			treinoStage.show();
 			
 			
 		} catch(Exception e) {

@@ -5,12 +5,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="132.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.esteira.view.EsteiraViewController">
+<AnchorPane prefHeight="185.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo06.dailygym.esteira.view.EsteiraViewController">
    <children>
-      <ProgressBar id="progressBar" fx:id="progressBar" layoutX="38.0" layoutY="31.0" prefWidth="200.0" progress="0.0" />
-      <TextField fx:id="velocidade" editable="false" layoutX="47.0" layoutY="83.0" prefHeight="25.0" prefWidth="55.0" text="0" />
-      <Label layoutX="45.0" layoutY="58.0" text="Velocidade" />
-      <Label layoutX="166.0" layoutY="58.0" text="Tempo" />
-      <TextField fx:id="tempo" editable="false" layoutX="155.0" layoutY="83.0" prefHeight="25.0" prefWidth="59.0" text="0" />
+      <ProgressBar id="progressBar" fx:id="progressBar" layoutX="38.0" layoutY="79.0" prefWidth="200.0" progress="0.0" />
+      <TextField fx:id="velocidadeField" editable="false" layoutX="47.0" layoutY="131.0" prefHeight="25.0" prefWidth="55.0" text="0" />
+      <Label layoutX="45.0" layoutY="106.0" text="Velocidade" />
+      <Label layoutX="166.0" layoutY="106.0" text="Tempo" />
+      <TextField fx:id="tempoField" editable="false" layoutX="155.0" layoutY="131.0" prefHeight="25.0" prefWidth="59.0" text="0" />
+      <Button id="iniciarBt" onAction="#onIniciarClick" layoutX="97.0" layoutY="28.0" mnemonicParsing="false" text="Iniciar treino" />
    </children>
 </AnchorPane>

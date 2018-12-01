@@ -9,8 +9,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import com.grupo06.dailygym.balanca.control.Medida;
+import com.grupo06.dailygym.esteira.control.Exercicio;
 import com.grupo06.dailygym.esteira.control.Treino;
-import com.grupo06.dailygym.smartwatch.control.Exercicio;
 
 public class Usuario {
 
@@ -21,7 +21,7 @@ public class Usuario {
 	private Set<DayOfWeek> diasDisponiveisTreino;
 	private ArrayList<Exercicio> exercicios;
 	private ArrayList<Medida> medidas;
-	private ArrayList<Treino> treinos;
+//	private ArrayList<Treino> treinos;
 	
 	public Usuario(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) throws InvalidParameterException {
 		this.setNome(nome);
@@ -31,7 +31,7 @@ public class Usuario {
 		this.setDiasDisponiveis(diasDisponiveis);
 		this.exercicios = new ArrayList<Exercicio>();
 		this.medidas = new ArrayList<Medida>();
-		this.treinos = new ArrayList<Treino>();
+//		this.treinos = new ArrayList<Treino>();
 	}
 	
 	public void atualizaDados(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) throws InvalidParameterException {
@@ -140,7 +140,7 @@ public class Usuario {
 	public void deletaHistorico() {
 		exercicios.clear();
 		medidas.clear();
-		treinos.clear();
+//		treinos.clear();
 	}
 
 	public void adicionaMedida(Medida medida) {
@@ -151,9 +151,9 @@ public class Usuario {
 		exercicios.add(exercicio);
 	}
 	
-	public void adicionaTreino(Treino treino) {
-		treinos.add(treino);
-	}
+//	public void adicionaTreino(Treino treino) {
+//		treinos.add(treino);
+//	}
 	
 	public ArrayList<Medida> getMedidas(){
 		return this.medidas;
@@ -163,9 +163,9 @@ public class Usuario {
 		return this.exercicios;
 	}
 	
-	public ArrayList<Treino> getTreinos(){
-		return this.treinos;
-	}
+//	public ArrayList<Treino> getTreinos(){
+//		return this.treinos;
+//	}
 	
 	public int getDistanciaPercorridaHoje() {
 		int distancia = 0;
@@ -175,5 +175,15 @@ public class Usuario {
 			}
 		}
 		return distancia;
+	}
+	
+	public int getCaloriasParaPerder(){
+		int caloriasGastas = 0;
+		for(Exercicio e: exercicios){
+			if(e.getData().equals(LocalDate.now())) {
+				caloriasGastas += e.getCaloriasQueimadas();
+			}
+		}
+		return this.metaDiaria - caloriasGastas;
 	}
 }	

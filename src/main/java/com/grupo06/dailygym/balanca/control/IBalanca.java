@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface IBalanca {
 
-	public  ArrayList<Medida> getMedicoes();
+	public ArrayList<Medida> getMedicoes();
 	
 	public Medida realizarMedicao();
 }

@@ -1,4 +1,4 @@
-package com.grupo06.dailygym.smartwatch.control;
+package com.grupo06.dailygym.esteira.control;
 
 import java.time.LocalDate;
 

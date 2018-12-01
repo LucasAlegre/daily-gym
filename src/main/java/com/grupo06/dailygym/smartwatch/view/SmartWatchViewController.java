@@ -13,6 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.grupo06.dailygym.balanca.control.Medida;
+import com.grupo06.dailygym.esteira.control.Intensidade;
+import com.grupo06.dailygym.esteira.control.Treino;
 import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
@@ -115,7 +117,7 @@ public class SmartWatchViewController implements Initializable {
     	velocidade2.setPromptText("Velocidade 2");
     	TextField velocidade3 = new TextField();
     	velocidade3.setPromptText("Velocidade 3");
-        
+    	 
         uniforme.setOnAction(value ->  {
         	grid.add(new Label("Velocidade"), 0, 2);
             grid.add(velocidade, 1, 2);
@@ -138,6 +140,7 @@ public class SmartWatchViewController implements Initializable {
             
             dupla.setDisable(true);
             tripla.setDisable(true);
+            
          });
         
         tripla.setOnAction(value ->  {
@@ -157,20 +160,50 @@ public class SmartWatchViewController implements Initializable {
         dialog.getDialogPane().setContent(grid);
         
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-        btOk.addEventFilter(
-            ActionEvent.ACTION, 
-            evento -> {
-                // Check whether some conditions are fulfilled
-                //if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || 
-                //	!validaMetaDiaria(meta.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
-                    // The conditions are not fulfilled so we consume the event to prevent the dialog to close
-                    evento.consume();
-                //}
-            }
-        );
+//        final Button btOk = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+//        btOk.addEventFilter(
+//            ActionEvent.ACTION, 
+//            evento -> {
+//                // Check whether some conditions are fulfilled
+//                //if (!validaNome(nome.getText()) || !validaIdade(idade.getText()) || !validaAltura(altura.getText()) || 
+//                //	!validaMetaDiaria(meta.getText()) || !validaDiasDiponiveis(diasDisponiveis)) {
+//                    // The conditions are not fulfilled so we consume the event to prevent the dialog to close
+//                    evento.consume();
+//                //}
+//            }
+//        );
         
-        dialog.showAndWait();
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == ButtonType.OK) {
+                return new String[]{tempo.getText(), velocidade.getText(), velocidade1.getText(), velocidade2.getText(), velocidade3.getText()};
+            }
+            return null;
+        });
+
+        Optional<String[]> result = dialog.showAndWait();
+        
+        if(result.isPresent()) {
+        	int tempoT = Integer.parseInt(result.get()[0]);
+        	float[]  velocidades;
+        	try{
+        		velocidades = new float[1];
+        		velocidades[0] = Float.parseFloat(result.get()[1]);
+        	}
+        	catch (NumberFormatException e){
+        		try{
+            		velocidades = new float[3];
+        			velocidades[0] = Float.parseFloat(result.get()[2]);
+                	velocidades[1] = Float.parseFloat(result.get()[3]);
+                	velocidades[2] = Float.parseFloat(result.get()[4]);
+        		}
+        		catch (NumberFormatException ex){
+            		velocidades = new float[2];
+        			velocidades[0] = Float.parseFloat(result.get()[2]);
+                	velocidades[1] = Float.parseFloat(result.get()[3]);
+        		}
+        	}
+        	smartWatchFacade.setTreinoCustomizado(tempoT, velocidades);
+        }
 
     	
     }
@@ -191,13 +224,11 @@ public class SmartWatchViewController implements Initializable {
 
     	Optional<ButtonType> result = alert.showAndWait();
     	if (result.get() == buttonTypeOne){
-    	    // ... user chose "One"
+    		smartWatchFacade.sugerirTreino(Intensidade.LEVE);
     	} else if (result.get() == buttonTypeTwo) {
-    	    // ... user chose "Two"
+    		smartWatchFacade.sugerirTreino(Intensidade.MODERADO);
     	} else if (result.get() == buttonTypeThree) {
-    	    // ... user chose "Three"
-    	} else {
-    	    // ... user chose CANCEL or closed the dialog
+    		smartWatchFacade.sugerirTreino(Intensidade.INTENSO);
     	}
     }
 

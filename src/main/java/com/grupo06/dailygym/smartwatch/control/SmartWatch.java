@@ -14,6 +14,7 @@ import com.grupo06.dailygym.balanca.control.Balanca;
 import com.grupo06.dailygym.balanca.control.IBalanca;
 import com.grupo06.dailygym.balanca.control.Medida;
 import com.grupo06.dailygym.esteira.control.Esteira;
+import com.grupo06.dailygym.esteira.control.Exercicio;
 import com.grupo06.dailygym.esteira.control.IEsteira;
 import com.grupo06.dailygym.esteira.control.Intensidade;
 import com.grupo06.dailygym.esteira.control.Treino;
@@ -31,6 +32,7 @@ public class SmartWatch implements ISmartWatch {
 		this.sensores = new SmartWatchSensores();
 		
 		daemonGetMedicoesBalanca();
+		daemonGetExerciciosEsteira();
 		daemonDetectaExercicios();
 	}		
 		
@@ -47,23 +49,18 @@ public class SmartWatch implements ISmartWatch {
 	}
 
 	@Override
-	public Treino getSugestaoTreino(Intensidade intensidade) {
+	public void sugerirTreino(Intensidade intensidade) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
 		Usuario usuario = usuarioDao.getUsuario();
 		
 		DayOfWeek diaAtual = LocalDate.now().getDayOfWeek();
-		if(usuario.getDiasDisponiveis().contains(diaAtual)) {
-			
-			return this.esteira.getSugestaoTreino(usuario.getMetaDiaria(), intensidade);
+		if(usuario.getDiasDisponiveis().contains(diaAtual)) {	
+			this.esteira.sugerirTreino(usuario, intensidade);
 		}
-		else {
-			return null;
-		}	
 	}
-
-	@Override
-	public void executaTreino(Treino treino) {
-		this.esteira.executaTreino(treino);
+	
+	public void setTreinoCustomizado(int tempo, float[] velocidades){
+		this.esteira.setTreinoCustomizado(tempo, velocidades);
 	}
 	
 	private void daemonGetMedicoesBalanca() {
@@ -82,6 +79,34 @@ public class SmartWatch implements ISmartWatch {
                 			usuarioDao.atualizaUsuario(usuario);
                 		}
                 	}
+                	try {
+                		Thread.sleep(1000);
+                	} catch(InterruptedException e) {
+                		
+                	}
+                }
+            }
+		});
+		daemon.setDaemon(true);
+		daemon.start();
+	}
+	
+	private void daemonGetExerciciosEsteira() {
+		Thread daemon = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                	ArrayList<Exercicio> exercicios = esteira.getExercicios();
+                	if(!exercicios.isEmpty()) {
+                		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
+                		if(usuarioDao.usuarioExiste()) {
+                			Usuario usuario = usuarioDao.getUsuario();
+                			for(Exercicio exercicio : exercicios) {
+                				usuario.adicionaExercicio(exercicio);
+                			}
+                			usuarioDao.atualizaUsuario(usuario);
+                		}
+                	}       
                 	try {
                 		Thread.sleep(1000);
                 	} catch(InterruptedException e) {

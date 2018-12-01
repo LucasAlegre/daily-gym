@@ -4,6 +4,8 @@ import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
 import java.util.Set;
 
+import com.grupo06.dailygym.esteira.control.Intensidade;
+import com.grupo06.dailygym.esteira.control.Treino;
 import com.grupo06.dailygym.smartwatch.control.*;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAO;
 import com.grupo06.dailygym.usuario.DAO.UsuarioDAOBancoFicticio;
@@ -25,6 +27,13 @@ public class SmartWatchFacade {
 		return this.smartWatch.isBatimentoElevado();
 	}
 	
+	public void sugerirTreino(Intensidade intensidade){
+		this.smartWatch.sugerirTreino(intensidade);
+	}	
+	
+	public void setTreinoCustomizado(int tempo, float[] velocidades){
+		this.smartWatch.setTreinoCustomizado(tempo, velocidades);
+	}
 	
 	public void criaPerfil(String nome, int idade, float altura, int metaDiaria, Set<DayOfWeek> diasDisponiveis) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();

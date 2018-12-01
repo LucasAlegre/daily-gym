@@ -2,9 +2,17 @@ package com.grupo06.dailygym.esteira.control;
 
 import java.util.ArrayList;
 
+import com.grupo06.dailygym.balanca.control.Medida;
+import com.grupo06.dailygym.usuario.model.Usuario;
+
 public interface IEsteira {
+	public void sugerirTreino( Usuario usuario, Intensidade intensidade);
 	
-	Treino getSugestaoTreino(int caloriasParaQueimar, Intensidade intensidade);
+	public void setTreinoCustomizado(int tempo, float[] velocidades);
 	
-	void executaTreino(Treino treino);
+	public Treino iniciarTreino();
+	
+	public Exercicio finalizarTreino(Treino treino);
+	
+	public ArrayList<Exercicio> getExercicios();
 }
