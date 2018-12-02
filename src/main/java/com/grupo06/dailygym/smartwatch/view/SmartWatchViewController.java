@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.grupo06.dailygym.balanca.control.Medida;
+import com.grupo06.dailygym.esteira.control.Exercicio;
 import com.grupo06.dailygym.esteira.control.Intensidade;
 import com.grupo06.dailygym.esteira.control.Treino;
 import com.grupo06.dailygym.smartwatch.control.SmartWatchFacade;
@@ -211,12 +212,7 @@ public class SmartWatchViewController implements Initializable {
         		velo = velo.concat(Float.toString(velocidades[i]));
         		velo = velo.concat(", ");
         	}
-        	String message = "Você tem certeza que deseja adicionar o treino com velocidades ";
-        	message = message.concat(velo);
-        	message = message.concat(" e tempo ");
-        	message = message.concat(Integer.toString(tempoT));
-        	message = message.concat("?");
-        	alert.setContentText(message);
+        	alert.setContentText("Você deseja adicionar o treino com velocidades "+velo+" Km/h e tempo "+tempoT+" minutos?");
 
         	Optional<ButtonType> result1 = alert.showAndWait();
         	if (result1.get() == ButtonType.OK){
@@ -261,12 +257,7 @@ public class SmartWatchViewController implements Initializable {
     	alert1.setTitle("Agendar treino customizado");
     	alert1.setHeaderText("Confirmação");
     	
-    	String message = "Você deseja adicionar o treino com velocidade ";
-    	message = message.concat(Float.toString(treino.getVelocidade()));
-    	message = message.concat(" Km/h e tempo ");
-    	message = message.concat(Integer.toString(treino.getTempo()));
-    	message = message.concat(" minutos?");
-    	alert1.setContentText(message);
+    	alert1.setContentText("Você deseja adicionar o treino com velocidade "+treino.getVelocidade()+" Km/h e tempo "+treino.getTempo()+" minutos?");
 
     	Optional<ButtonType> result1 = alert1.showAndWait();
     	if (result1.get() == ButtonType.OK){
@@ -574,27 +565,55 @@ public class SmartWatchViewController implements Initializable {
         dialog.setHeaderText("Dados:");
         dialog.initModality(Modality.WINDOW_MODAL);
         
+        ArrayList<Exercicio> exercicios = usuario.getExercicios();
+        ArrayList<Medida> medidas = usuario.getMedidas();
+        
         GridPane grid = new GridPane();
         grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setVgap(13 + exercicios.size() + medidas.size());
 
         grid.add(new Label("Nome: " + usuario.getNome()), 0, 0);
-        grid.add(new Label("Idade: " + usuario.getIdade()), 0, 1);
-        grid.add(new Label("Altura (m): " + usuario.getAltura()), 0, 2);
-        grid.add(new Label("Meta Diária (kcal): " + usuario.getMetaDiaria()), 0, 3);
-        grid.add(new Label("IMC: " + usuario.getIMC()), 0, 4);
-        grid.add(new Label("Peso (Kg): " + usuario.getPesoAtual()), 0, 5);
-        grid.add(new Label("Água (%): " + usuario.getPorcentualAguaAtual()), 0, 6);
-        grid.add(new Label("Gordura (%): " + usuario.getPorcentualGorduraAtual()), 0, 7);
+        grid.add(new Label("Idade: " + usuario.getIdade()), 1, 0);
+        grid.add(new Label("Altura (m): " + usuario.getAltura()), 2, 0);
+        grid.add(new Label("Meta Diária (kcal): " + usuario.getMetaDiaria()), 0, 1);
+        grid.add(new Label("IMC: " + usuario.getIMC()), 1, 1);
+        if(usuario.getPesoAtual()==-1.0){
+            grid.add(new Label("Peso (Kg): --"), 0, 2);
+            grid.add(new Label("Água (%): --"), 1, 2);
+            grid.add(new Label("Gordura (%): --"), 2, 2);
+        	
+        }
+        else{
+	        grid.add(new Label("Peso (Kg): " + usuario.getPesoAtual()), 0, 2);
+	        grid.add(new Label("Água (%): " + usuario.getPorcentualAguaAtual()), 1, 2);
+	        grid.add(new Label("Gordura (%): " + usuario.getPorcentualGorduraAtual()), 2, 2);
+        }
 
-        grid.add(new Label("Dias disponíveis para treino:"), 0, 8);
+        grid.add(new Label("Dias disponíveis para treino:"), 0, 3);
         String dias = "";
         for(DayOfWeek day : usuario.getDiasDisponiveis()) {
         	dias += day.toString() + " ";
         }
-        grid.add(new Label(dias), 0, 9);
-        grid.add(new Label("Distância Percoridda Hoje (Km): " + usuario.getDistanciaPercorridaHoje()/1000.0), 0, 10);
+        grid.add(new Label(dias), 0, 4);
+        grid.add(new Label("Distância Percoridda Hoje (Km): " + usuario.getDistanciaPercorridaHoje()/1000.0), 0, 5);
 
+        grid.add(new Label("MEDIDAS"), 0, 6);
+        int cont = 7;
+        for(Medida m: medidas){
+            grid.add(new Label("Peso (Kg): " + m.getPeso()), 0, cont);
+            grid.add(new Label("Água (%): " + m.getPorcentagemAgua()), 1, cont);
+            grid.add(new Label("Gordura (%): " + m.getPorcentagemGordura()), 2, cont);
+            cont++;
+        }
+        
+        grid.add(new Label("EXERCÍCIOS"), 0, cont);
+        cont++;
+        for(Exercicio e: exercicios){
+            grid.add(new Label("Distancia (Km): " + e.getDistanciaPercorrida()/1000.0), 0, cont);
+            grid.add(new Label("Calorias (kcal): " + e.getCaloriasQueimadas()), 1, cont);
+            cont++;
+        }
+        
         dialog.getDialogPane().setContent(grid);
         dialog.show();
 
