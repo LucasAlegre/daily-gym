@@ -202,7 +202,26 @@ public class SmartWatchViewController implements Initializable {
                 	velocidades[1] = Float.parseFloat(result.get()[3]);
         		}
         	}
-        	smartWatchFacade.setTreinoCustomizado(tempoT, velocidades);
+        	Alert alert = new Alert(AlertType.CONFIRMATION);
+        	alert.setTitle("Agendar treino customizado");
+        	alert.setHeaderText("Confirmação");
+        	
+        	String velo = "";
+        	for(int i = 0; i<velocidades.length; i++){
+        		velo = velo.concat(Float.toString(velocidades[i]));
+        		velo = velo.concat(", ");
+        	}
+        	String message = "Você tem certeza que deseja adicionar o treino com velocidades ";
+        	message = message.concat(velo);
+        	message = message.concat(" e tempo ");
+        	message = message.concat(Integer.toString(tempoT));
+        	message = message.concat("?");
+        	alert.setContentText(message);
+
+        	Optional<ButtonType> result1 = alert.showAndWait();
+        	if (result1.get() == ButtonType.OK){
+            	smartWatchFacade.setTreinoCustomizado(tempoT, velocidades);
+        	}
         }
 
     	
@@ -223,15 +242,38 @@ public class SmartWatchViewController implements Initializable {
     	alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
 
     	Optional<ButtonType> result = alert.showAndWait();
+    	Treino treino;
     	if (result.get() == buttonTypeOne){
-    		smartWatchFacade.sugerirTreino(Intensidade.LEVE);
+    		treino = smartWatchFacade.sugerirTreino(Intensidade.LEVE);
+    		confirmarSugestao(treino);
     	} else if (result.get() == buttonTypeTwo) {
-    		smartWatchFacade.sugerirTreino(Intensidade.MODERADO);
+    		treino = smartWatchFacade.sugerirTreino(Intensidade.MODERADO);
+    		confirmarSugestao(treino);
     	} else if (result.get() == buttonTypeThree) {
-    		smartWatchFacade.sugerirTreino(Intensidade.INTENSO);
+    		treino = smartWatchFacade.sugerirTreino(Intensidade.INTENSO);
+    		confirmarSugestao(treino);
     	}
+    	
     }
 
+    private void confirmarSugestao(Treino treino){
+    	Alert alert1 = new Alert(AlertType.CONFIRMATION);
+    	alert1.setTitle("Agendar treino customizado");
+    	alert1.setHeaderText("Confirmação");
+    	
+    	String message = "Você deseja adicionar o treino com velocidade ";
+    	message = message.concat(Float.toString(treino.getVelocidade()));
+    	message = message.concat(" Km/h e tempo ");
+    	message = message.concat(Integer.toString(treino.getTempo()));
+    	message = message.concat(" minutos?");
+    	alert1.setContentText(message);
+
+    	Optional<ButtonType> result1 = alert1.showAndWait();
+    	if (result1.get() == ButtonType.OK){
+        	smartWatchFacade.agendarTreino(treino);
+    	}
+    }
+    
     @FXML
     void onCriarClick(ActionEvent event) {
     	Dialog<String[]> dialog = new Dialog<>();

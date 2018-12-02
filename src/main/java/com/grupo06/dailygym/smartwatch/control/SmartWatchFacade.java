@@ -27,9 +27,13 @@ public class SmartWatchFacade {
 		return this.smartWatch.isBatimentoElevado();
 	}
 	
-	public void sugerirTreino(Intensidade intensidade){
-		this.smartWatch.sugerirTreino(intensidade);
-	}	
+	public Treino sugerirTreino(Intensidade intensidade){
+		return this.smartWatch.sugerirTreino(intensidade);
+	}
+	
+	public void agendarTreino(Treino treino){
+		this.smartWatch.agendarTreino(treino);
+	}
 	
 	public void setTreinoCustomizado(int tempo, float[] velocidades){
 		this.smartWatch.setTreinoCustomizado(tempo, velocidades);

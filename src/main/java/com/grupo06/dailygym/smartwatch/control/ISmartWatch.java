@@ -19,7 +19,9 @@ public interface ISmartWatch {
 	
 	boolean isBatimentoElevado();
 	
-	void sugerirTreino(Intensidade intensidade);
+	Treino sugerirTreino(Intensidade intensidade);
+	
+	void agendarTreino(Treino treino);
 		
 	void setTreinoCustomizado(int tempo, float[] velocidades);
 	

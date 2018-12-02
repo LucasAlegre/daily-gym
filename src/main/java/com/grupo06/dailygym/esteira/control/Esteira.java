@@ -45,8 +45,12 @@ public class Esteira implements IEsteira {
 	}
 	
 	@Override
-	public void sugerirTreino(Usuario usuario, Intensidade intensidade) {
+	public Treino sugerirTreino(Usuario usuario, Intensidade intensidade) {
 		Treino treino = new Treino(intensidade, usuario);
+		return treino;
+	}
+	
+	public void agendarTreino(Treino treino){
 		this.treinos.add(treino);
 	}
 	

@@ -6,7 +6,9 @@ import com.grupo06.dailygym.balanca.control.Medida;
 import com.grupo06.dailygym.usuario.model.Usuario;
 
 public interface IEsteira {
-	public void sugerirTreino( Usuario usuario, Intensidade intensidade);
+	public Treino sugerirTreino( Usuario usuario, Intensidade intensidade);
+	
+	public void agendarTreino(Treino treino);
 	
 	public void setTreinoCustomizado(int tempo, float[] velocidades);
 	

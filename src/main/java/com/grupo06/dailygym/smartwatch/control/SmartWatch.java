@@ -49,14 +49,21 @@ public class SmartWatch implements ISmartWatch {
 	}
 
 	@Override
-	public void sugerirTreino(Intensidade intensidade) {
+	public Treino sugerirTreino(Intensidade intensidade) {
 		UsuarioDAO usuarioDao = UsuarioDAOBancoFicticio.getInstance();
 		Usuario usuario = usuarioDao.getUsuario();
 		
 		DayOfWeek diaAtual = LocalDate.now().getDayOfWeek();
 		if(usuario.getDiasDisponiveis().contains(diaAtual)) {	
-			this.esteira.sugerirTreino(usuario, intensidade);
+			return this.esteira.sugerirTreino(usuario, intensidade);
 		}
+		else{
+			return null;
+		}
+	}
+	
+	public void agendarTreino(Treino treino){
+		this.esteira.agendarTreino(treino);
 	}
 	
 	public void setTreinoCustomizado(int tempo, float[] velocidades){
