@@ -61,7 +61,7 @@ public class Esteira implements IEsteira {
 		
 		for (int i = 0; i < velocidades.length; i++) {
 			Treino treino = new Treino(Intensidade.CUSTOMIZADO, intervalos[i], velocidades[i]);
-			this.treinos.add(treino);
+			this.agendarTreino(treino);
 		}
 	}
 	
