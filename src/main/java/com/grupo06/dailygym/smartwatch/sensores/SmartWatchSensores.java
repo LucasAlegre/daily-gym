@@ -14,6 +14,8 @@ public class SmartWatchSensores implements ISmartWatchSensores {
 	@Override
 	public int getBatimentoCardiaco() {
 		Random generator = new Random();
+		if(generator.nextFloat() < 0.01)
+			return 155;
 		int batimento = generator.nextInt(80 - 75 + 1) + 75;
 		return batimento;
 	}
